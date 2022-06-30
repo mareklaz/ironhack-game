@@ -1,10 +1,10 @@
 @font-face {
     font-family: mainFont;
-    src: url(/assets/fonts/IMFellEnglishSC-Regular.ttf);
+    src: url(./assets/fonts/IMFellEnglishSC-Regular.ttf);
 }
 @font-face {
     font-family: pixelFont;
-    src: url(/assets/fonts/KenneyMiniSquare.ttf);
+    src: url(./assets/fonts/KenneyMiniSquare.ttf);
 }
 
 html {
@@ -33,7 +33,7 @@ h1 {
 
 .canvas {
 
-    background-image: url(/assets/img/test.png);
+    background-image: url(./assets/img/test.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

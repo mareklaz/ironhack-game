@@ -18,7 +18,7 @@ class Crab {
         this.damage = 5
         // Graphics
         this.img = new Image()
-        this.img.src = '/assets/img/crab2.png'
+        this.img.src = './assets/img/crab2.png'
         this.img.frames = 16
         this.img.frameIndex = 0
         this.tick = 0

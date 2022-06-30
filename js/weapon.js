@@ -9,7 +9,7 @@ class Weapon {
 
       // Sound
       this.swordSound = new Audio()
-      this.swordSound.src = '/assets/sound/knife.mp3'
+      this.swordSound.src = './assets/sound/knife.mp3'
       this.swordSound.volume = 0.2
     }
   

@@ -9,7 +9,7 @@ class Platform {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = '/assets/img/platform.png'
+        this.img.src = './assets/img/platform.png'
     }
 
     collide(player) {
