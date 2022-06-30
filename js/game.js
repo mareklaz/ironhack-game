@@ -5,6 +5,7 @@ class Game {
         
         // Background
         this.window = new Window(this.ctx)
+        this.background = new Background(this.ctx)
         this.bigCloud = new BigClouds(this.ctx)
         this.waterReflect = new WaterReflect(this.ctx)
         // Player
@@ -75,6 +76,7 @@ class Game {
 
     draw() {
         // Background
+        this.background.draw()
         this.bigCloud.draw()
         this.window.draw()
         this.waterReflect.draw()

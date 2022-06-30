@@ -43,6 +43,32 @@ class Window {
     }
 }
 
+class Background {
+  constructor(ctx) {
+      this.ctx = ctx
+      this.width = CANVAS_WIDTH
+      this.height = CANVAS_HEIGHT
+      this.position = {
+          x: 0,
+          y: 0
+      }
+      // Graphics
+      this.img = new Image()
+      this.img.src = './assets/img/background.png'
+  }
+
+  draw() {
+
+      this.ctx.drawImage(
+          this.img,
+          this.position.x,
+          this.position.y,
+          this.width,
+          this.height
+      )
+  }
+}
+
 class BigClouds {
     constructor(ctx) {
         this.ctx = ctx
