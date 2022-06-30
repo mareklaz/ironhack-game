@@ -83,3 +83,34 @@ class coinGUI {
     }
     
 }
+
+//*************** Key GUI ***************//
+class keyGUI {
+    constructor(ctx) {
+        this.ctx = ctx
+        this.keyN = 0
+        this.width = 16;
+        this.height = 30;
+        this.position = {
+            x: 32,
+            y: 32
+        }
+        // Graphics
+        this.guiCoinImg = new Image()
+        this.guiCoinImg.src = './assets/img/gui_key.png'
+    }
+    draw() {
+        this.ctx.drawImage(
+            this.guiCoinImg,
+            this.position.x = 800,
+            this.position.y = 80,
+            this.width,
+            this.height
+        )
+        this.ctx.font = "44px pixelFont";
+        this.ctx.fillStyle = "#eed878";
+        this.ctx.textAlign = "right";
+        this.ctx.fillText(String(this.keyN), 790, 110);
+    }
+    
+}

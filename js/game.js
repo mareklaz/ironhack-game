@@ -18,7 +18,7 @@ class Game {
         this.coinPoints = new coinGUI(this.ctx)
         this.hpContainer = new healthBarContainerGUI(this.ctx)
         this.hpBar = new healthBarGUI(this.ctx)
-
+        this.keyPoints = new keyGUI(this.ctx)
         // Sound
         this.mainTheme = new Audio()
         this.mainTheme.src = './assets/sound/game1.mp3'
@@ -36,6 +36,12 @@ class Game {
             new Platform(this.ctx, 192, 64, 900, 500),
             new Platform(this.ctx, 192, 64, 900, 700),
             new Platform(this.ctx, 192, 64, 550, 500),
+        ]
+        this.palmBack = [
+            new PalmBack(this.ctx, 100, 740),
+            new PalmBack(this.ctx, 40, 800),
+            new PalmBack(this.ctx, 800, 790),
+            new PalmBack(this.ctx, 1000, 600)
         ]
         // Treasures
         this.coin = [
@@ -55,6 +61,9 @@ class Game {
         ]
         this.potion = [
             new Potion(this.ctx, 980, 650)
+        ]
+        this.key = [
+            new Key(this.ctx, 300, 300)
         ]
 
     }
@@ -93,20 +102,25 @@ class Game {
         }
     }
 
- 
-
     draw() {
         // Background
         this.background.draw()
         this.smallCloud1.forEach(element => {element.draw()})
         this.bigCloud.draw()
-        this.window.draw()
+        
+        
         this.waterReflect.draw()
+        this.palmBack.forEach(element => {element.draw()})
+        this.window.draw()
+        
         // Various Element
         this.platform.forEach(element => {element.draw()})
         this.coin.forEach(element => {element.draw()})
         this.potion.forEach(element => {element.draw()})
         this.diamond.forEach(element => {element.draw()})
+        this.key.forEach(element => {element.draw()})
+        // Level
+        
         // Player & Enemies
         this.enemyCrab.forEach(element => {element.draw()})
         this.player.draw()
@@ -114,6 +128,8 @@ class Game {
         this.hpContainer.draw()
         this.hpBar.draw()
         this.coinPoints.draw()
+        this.keyPoints.draw()
+        
         // Test
     }
 
@@ -123,6 +139,7 @@ class Game {
         this.coinTrigger()
         this.diamondTrigger()
         this.potionTrigger()
+        this.keyTrigger()
         this.enemyCollide()
         this.swordCollide()
         // Damage Check HP Bar
@@ -131,7 +148,7 @@ class Game {
     }
 
     platformTrigger() {
-        let platformCollision = this.platform.find(element => element.collide(this.player))
+        let platformCollision = this.platform.find(element => element.collidePlayer(this.player))
         if(platformCollision) {
             this.player.velocity.y = 0
             this.player.maxY = platformCollision.position.y
@@ -145,7 +162,7 @@ class Game {
         let coinCollision = this.coin.find(element => element.coinCollide(this.player))
         if(coinCollision) {
             coinCollision.coinSound.play()
-            this.coinPoints.score += 10
+            this.coinPoints.score += 20
             this.coin = this.coin.filter(element => element != coinCollision)
         }
     }
@@ -154,7 +171,7 @@ class Game {
         let diamondCollision = this.diamond.find(element => element.diamondCollide(this.player))
         if(diamondCollision) {
             diamondCollision.diamondSound.play()
-            this.coinPoints.score += 100
+            this.coinPoints.score += 500
             this.diamond = this.diamond.filter(element => element != diamondCollision)
         }
     }
@@ -170,6 +187,15 @@ class Game {
         }
     }
 
+    keyTrigger() {
+        let keyTrigger = this.key.find(element => element.keyCollide(this.player))
+        if(keyTrigger) {
+            keyTrigger.diamondSound.play()
+            this.keyPoints.keyN += 1
+            this.key = this.key.filter(element => element != keyTrigger)
+        }
+    }
+
     enemyCollide() {
         let enemyCollision = this.enemyCrab.some(element => element.crabCollide(this.player))
         if(enemyCollision && !this.player.isInvincible) {
@@ -182,21 +208,15 @@ class Game {
         }
     }
     
-    // PENDIENTE DE REVISION
     swordCollide() {
-        
-        
-    }
-
-    swordCollide() {
-        
         let enemyCollision = this.enemyCrab.find(crab => this.player.weapon.swords.some(sword => sword.swordCollide(crab)))
         let swordCollision = this.player.weapon.swords.find(element => this.enemyCrab.some(crab => element.swordCollide(crab)))
-        console.log(enemyCollision)
+
         if(enemyCollision) {
             console.log('impacto')
             this.enemyCrab = this.enemyCrab.filter(crab => crab != enemyCollision)
-            this.player.weapon.swords = this.player.weapon.swords.filter(sword => sword != swordCollision)
+            this.coinPoints.score += 100
+            this.player.weapon.swords =this.player.weapon.swords.filter(sword => sword != swordCollision)
         }
     }
 

@@ -12,7 +12,7 @@ class Platform {
         this.img.src = './assets/img/platform.png'
     }
 
-    collide(player) {
+    collidePlayer(player) {
         const collideX = player.position.x + player.width >= this.position.x && player.position.x  <= this.position.x + this.width;
         const collideY = player.position.y + player.height <= this.position.y && player.position.y + player.height + player.velocity.y >= this.position.y;
         return collideX && collideY
