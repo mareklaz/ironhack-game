@@ -24,7 +24,7 @@ class Crab {
         this.tick = 0
 
         this.soundAttack = new Audio();
-        this.soundAttack.src = '/assets/sound/attack.mp3';
+        this.soundAttack.src = './assets/sound/attack.mp3';
         this.soundAttack.volume = 0.5
     }
 

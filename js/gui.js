@@ -45,10 +45,11 @@ class healthBarGUI {
             this.width,
             this.height
         )
-        this.ctx.font = "44px pixelFont";
-        this.ctx.fillStyle = "#DC4949";
-        this.ctx.textAlign = "right";
-        this.ctx.fillText(String(this.width), 1000, 110);
+        // Width Text
+        // this.ctx.font = "44px pixelFont";
+        // this.ctx.fillStyle = "#DC4949";
+        // this.ctx.textAlign = "right";
+        // this.ctx.fillText(String(this.width), 1000, 110);
     }
     
 }

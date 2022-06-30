@@ -22,14 +22,11 @@ class Sword {
     }
   
     move() {
-      // pendiente de revision
-      console.log(this)
-      console.log(this.position.x)
       if (this.direction === "left") {
-        this.velocity.x = -5
+        this.velocity.x = -8
         this.img.src = this.leftSword
       } else if (this.direction === "right") {
-        this.velocity.x = 5
+        this.velocity.x = 8
         this.img.src = this.rightSword
       }
       this.position.x += this.velocity.x

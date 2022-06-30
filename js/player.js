@@ -6,7 +6,7 @@ class Player {
         this.height = 56
         this.position = {
             x: CANVAS_WIDTH / 2,
-            y: FLOOR - this.height
+            y: 633
         }
         this.velocity = {
             x: 0,

@@ -15,11 +15,16 @@ class Game {
         this.coinPoints = new coinGUI(this.ctx)
         this.hpContainer = new healthBarContainerGUI(this.ctx)
         this.hpBar = new healthBarGUI(this.ctx)
+
+        // Sound
+        this.mainTheme = new Audio()
+        this.mainTheme.src = './assets/sound/game1.mp3'
+        this.mainTheme.volume = 0.5
         
         // Enemies
         this.enemyCrab = [
-            new Crab(this.ctx, 900, 0),
-            new Crab(this.ctx, 200, 0)
+            new Crab(this.ctx, 900, 2),
+            new Crab(this.ctx, 200, 4)
         ]
         // Level
         this.platform = [ // width, height, x, y
@@ -27,6 +32,7 @@ class Game {
             new Platform(this.ctx, 192, 64, 200, 500),
             new Platform(this.ctx, 192, 64, 900, 500),
             new Platform(this.ctx, 192, 64, 900, 700),
+            new Platform(this.ctx, 192, 64, 550, 700),
         ]
         // Treasures
         this.coin = [
@@ -51,15 +57,16 @@ class Game {
     }
 
     start() {
+        
         this.intervalId = setInterval(() => {
             this.clear();
             this.draw();
             this.move();
+            this.mainTheme.play()
         }, 1000 / 60)
     }
 
     move() {
-        
         this.checkCollision();
         this.bigCloud.move()
         this.player.move()
@@ -142,6 +149,7 @@ class Game {
     enemyCollide() {
         let enemyCollision = this.enemyCrab.some(element => element.crabCollide(this.player))
         if(enemyCollision && !this.player.isInvincible) {
+            this.enemyCrab.some(crab => crab.soundAttack.play())
             this.player.health -= 5
             this.player.isInvincible = true
             setTimeout(() => {
