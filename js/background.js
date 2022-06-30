@@ -9,7 +9,7 @@ class Window {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = '../assets/img/marco.png'
+        this.img.src = './assets/img/marco.png'
         this.img.frames = 4
         this.img.frameIndex = 0
     }
@@ -54,7 +54,7 @@ class Background {
       }
       // Graphics
       this.img = new Image()
-      this.img.src = '../assets/img/background.png'
+      this.img.src = './assets/img/background.png'
   }
 
   draw() {
@@ -83,7 +83,7 @@ class BigClouds {
             y: 0
         }
         this.img = new Image()
-        this.img.src = "../assets/img/bigCloud.png"
+        this.img.src = "./assets/img/bigCloud.png"
         
     }
   
@@ -125,7 +125,7 @@ class WaterReflect {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = '../assets/img/waterReflect2.png'
+        this.img.src = './assets/img/waterReflect2.png'
         this.img.frames = 4
         this.img.frameIndex = 0
         this.tick = 0

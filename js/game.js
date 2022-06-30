@@ -19,7 +19,7 @@ class Game {
 
         // Sound
         this.mainTheme = new Audio()
-        this.mainTheme.src = '../assets/sound/game1.mp3'
+        this.mainTheme.src = './assets/sound/game1.mp3'
         this.mainTheme.volume = 0.5
         
         // Enemies
