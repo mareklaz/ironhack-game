@@ -1,0 +1,61 @@
+@font-face {
+    font-family: mainFont;
+    src: url(/assets/fonts/IMFellEnglishSC-Regular.ttf);
+}
+@font-face {
+    font-family: pixelFont;
+    src: url(/assets/fonts/KenneyMiniSquare.ttf);
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: pixelFont;
+    color: #ffffff;
+    background-color: #302E3B;
+}
+
+h1 {
+    font-size: 56px;
+    margin: 10px 0;
+    padding: 10px 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas {
+
+    background-image: url(/assets/img/test.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* width: 800px;
+    height: 600px; */
+    /* image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges; */
+}
+
+.start-btn {
+    font-family: mainFont;
+    font-size: 24px;
+    width: 100px;
+    margin: 10px;
+    padding: 20px 10px;
+    color: white;
+    background-color: #212f3c;
+    border: none;
+}
+
+.start-btn:hover {
+    background-color: #2e4053;
+}
