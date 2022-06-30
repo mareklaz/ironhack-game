@@ -29,11 +29,10 @@ h1 {
 }
 
 .canvas {
-
-    background-image: url(../assets/img/background.png);
+    /* background-image: url(../assets/img/background.png);
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     /* width: 800px;
     height: 600px; */
     /* image-rendering: -moz-crisp-edges;
