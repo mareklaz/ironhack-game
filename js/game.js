@@ -19,7 +19,7 @@ class Game {
 
         // Sound
         this.mainTheme = new Audio()
-        this.mainTheme.src = './assets/sound/game1.mp3'
+        this.mainTheme.src = '../assets/sound/game1.mp3'
         this.mainTheme.volume = 0.5
         
         // Enemies
@@ -33,7 +33,7 @@ class Game {
             new Platform(this.ctx, 192, 64, 200, 500),
             new Platform(this.ctx, 192, 64, 900, 500),
             new Platform(this.ctx, 192, 64, 900, 700),
-            new Platform(this.ctx, 192, 64, 550, 700),
+            new Platform(this.ctx, 192, 64, 550, 500),
         ]
         // Treasures
         this.coin = [

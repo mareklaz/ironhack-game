@@ -1,5 +1,5 @@
 @font-face {
-    src: url(./assets/fonts/KenneyMiniSquare.ttf);
+    src: url(../assets/fonts/KenneyMiniSquare.ttf);
     font-family: pixelFont;
     font-style: normal;
 }
@@ -30,7 +30,7 @@ h1 {
 
 .canvas {
 
-    background-image: url(./assets/img/background.png);
+    background-image: url(../assets/img/background.png);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

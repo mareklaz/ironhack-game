@@ -10,7 +10,7 @@ class healthBarContainerGUI {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/healthContainer.png'
+        this.img.src = '../assets/img/healthContainer.png'
     }
     draw() {
         this.ctx.drawImage(
@@ -34,7 +34,7 @@ class healthBarGUI {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/healthBar.png'
+        this.img.src = '../assets/img/healthBar.png'
     }
 
     draw() {
@@ -66,7 +66,7 @@ class coinGUI {
         }
         // Graphics
         this.guiCoinImg = new Image()
-        this.guiCoinImg.src = './assets/img/gui_coin.png'
+        this.guiCoinImg.src = '../assets/img/gui_coin.png'
     }
     draw() {
         this.ctx.drawImage(

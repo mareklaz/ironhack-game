@@ -10,13 +10,13 @@ class Coin {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/coin.png'
+        this.img.src = '../assets/img/coin.png'
         this.img.frames = 4
         this.img.frameIndex = 0
         this.tick = 0
         // Sound
         this.coinSound = new Audio()
-        this.coinSound.src = './assets/sound/coin2.wav'
+        this.coinSound.src = '../assets/sound/coin2.wav'
     }
 
     coinCollide(player) {
@@ -67,13 +67,13 @@ class Potion {
         this.restore = 100
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/potion.png'
+        this.img.src = '../assets/img/potion.png'
         this.img.frames = 7
         this.img.frameIndex = 0
         this.tick = 0
         // Sound
         this.potionSound = new Audio();
-        this.potionSound.src = './assets/sound/potion.mp3';
+        this.potionSound.src = '../assets/sound/potion.mp3';
         this.potionSound.volume = 0.2
     }
 
@@ -122,13 +122,13 @@ class Diamond {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/diamond.png'
+        this.img.src = '../assets/img/diamond.png'
         this.img.frames = 4
         this.img.frameIndex = 0
         this.tick = 0
         // Sound
         this.diamondSound = new Audio();
-        this.diamondSound.src = './assets/sound/diamond.mp3';
+        this.diamondSound.src = '../assets/sound/diamond.mp3';
         this.diamondSound.volume = 0.2
     }
 

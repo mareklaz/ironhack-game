@@ -6,7 +6,7 @@ class Player {
         this.height = 56
         this.position = {
             x: CANVAS_WIDTH / 2,
-            y: 633
+            y: 430
         }
         this.velocity = {
             x: 0,
@@ -28,8 +28,8 @@ class Player {
         this.weapon = new Weapon(this)
         this.sword = new Sword(this.ctx)
         // Graphics
-        this.rightSprite = './assets/img/playerRight.png'
-        this.leftSprite = './assets/img/playerLeft.png'
+        this.rightSprite = '../assets/img/playerRight.png'
+        this.leftSprite = '../assets/img/playerLeft.png'
         this.img = new Image()
         this.img.src = this.rightSprite
         this.img.frames = 12
@@ -37,7 +37,7 @@ class Player {
         this.tick = 0
         // Sound
         this.jumpSound = new Audio()
-        this.jumpSound.src = './assets/sound/jump1.mp3'
+        this.jumpSound.src = '../assets/sound/jump1.mp3'
         // Others
         this.setListener()
     }

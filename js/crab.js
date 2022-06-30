@@ -18,13 +18,13 @@ class Crab {
         this.damage = 5
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/crab2.png'
+        this.img.src = '../assets/img/crab2.png'
         this.img.frames = 16
         this.img.frameIndex = 0
         this.tick = 0
 
         this.soundAttack = new Audio();
-        this.soundAttack.src = './assets/sound/attack.mp3';
+        this.soundAttack.src = '../assets/sound/attack.mp3';
         this.soundAttack.volume = 0.5
     }
 

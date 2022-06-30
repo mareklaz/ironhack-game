@@ -14,8 +14,8 @@ class Sword {
       this.direction = direction
       
       // Graphics
-      this.leftSword = './assets/img/swordLeft.png'
-      this.rightSword = './assets/img/swordRight.png'
+      this.leftSword = '../assets/img/swordLeft.png'
+      this.rightSword = '../assets/img/swordRight.png'
       this.img = new Image()
       this.img.src = this.rightSword
       
