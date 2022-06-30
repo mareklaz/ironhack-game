@@ -28,19 +28,6 @@ h1 {
     align-items: center;
 }
 
-.canvas {
-    /* background-image: url(../assets/img/background.png);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat; */
-    /* width: 800px;
-    height: 600px; */
-    /* image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-crisp-edges;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges; */
-}
-
 .start-btn {
     font-family: pixelFont;
     font-size: 24px;
