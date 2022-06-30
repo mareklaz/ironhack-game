@@ -9,7 +9,7 @@ class Window {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = './assets/img/marco.png'
+        this.img.src = '../assets/img/marco.png'
         this.img.frames = 4
         this.img.frameIndex = 0
     }
@@ -58,7 +58,6 @@ class Background {
   }
 
   draw() {
-
       this.ctx.drawImage(
           this.img,
           this.position.x,
@@ -72,14 +71,14 @@ class Background {
 class BigClouds {
     constructor(ctx) {
         this.ctx = ctx
-        this.width = 896*2
+        this.width = 1792
         this.height = 202
         this.position = {
             x: 0,
             y: 546.8
         }
         this.velocity = {
-            x: -0.3,
+            x: -0.5,
             y: 0
         }
         this.img = new Image()
@@ -99,7 +98,7 @@ class BigClouds {
   
       this.ctx.drawImage(
         this.img,
-        this.position.x + this.width,
+        this.position.x + this.width-1,
         this.position.y,
         this.width,
         this.height
@@ -112,6 +111,45 @@ class BigClouds {
         this.position.x = 0
       }
     }
+}
+
+class SmallCloud1 {
+  constructor(ctx) {
+      this.ctx = ctx
+      this.width = 266
+      this.height = 70
+      this.randomN = Math.round(Math.random() * (480 - 256) + 256)
+      this.position = {
+          x: 1300,
+          y: this.randomN
+      }
+      this.velocity = {
+          x: -0.7,
+          y: 0
+      }
+      this.img = new Image()
+      this.img.src = "../assets/img/smartCloud1.png"
+      
+  }
+
+  draw() {
+    this.ctx.drawImage(
+      this.img,
+      this.position.x,
+      this.position.y,
+      this.width,
+      this.height
+    )
+  }
+
+  move() {
+    this.position.x += this.velocity.x
+  }
+
+  isVisible() {
+    return this.position.x + this.width >= LEFT_LIMIT
+  }
+
 }
 
 class WaterReflect {

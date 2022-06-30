@@ -8,6 +8,8 @@ class Game {
         this.background = new Background(this.ctx)
         this.bigCloud = new BigClouds(this.ctx)
         this.waterReflect = new WaterReflect(this.ctx)
+        this.smallCloud1 = []
+        this.smallCloud1count = 0
         // Player
         this.player = new Player(this.ctx)
         this.sword = new Sword(this.ctx)
@@ -63,6 +65,7 @@ class Game {
             this.clear();
             this.draw();
             this.move();
+            this.cloudEngine() 
             this.mainTheme.play()
         }, 1000 / 60)
     }
@@ -72,11 +75,30 @@ class Game {
         this.bigCloud.move()
         this.player.move()
         this.enemyCrab.forEach(element => {element.move()})
+        this.smallCloud1.forEach(element => {element.move()})
     }
+
+    cloudGenerator () {
+        this.smallCloud1.push(new SmallCloud1(this.ctx))
+    }
+
+    cloudEngine() {
+        this.smallCloud1count++;
+
+        if (this.smallCloud1count % 800 === 0) {
+            
+            this.smallCloud1 = this.smallCloud1.filter(obs => obs.isVisible())
+            console.log(this.smallCloud1)
+            this.cloudGenerator()
+        }
+    }
+
+ 
 
     draw() {
         // Background
         this.background.draw()
+        this.smallCloud1.forEach(element => {element.draw()})
         this.bigCloud.draw()
         this.window.draw()
         this.waterReflect.draw()
@@ -162,10 +184,19 @@ class Game {
     
     // PENDIENTE DE REVISION
     swordCollide() {
-        let enemyCollision = this.weapon.swords.find(element => this.enemyCrab.some(crab => element.swordCollide(crab)))
+        
+        
+    }
+
+    swordCollide() {
+        
+        let enemyCollision = this.enemyCrab.find(crab => this.player.weapon.swords.some(sword => sword.swordCollide(crab)))
+        let swordCollision = this.player.weapon.swords.find(element => this.enemyCrab.some(crab => element.swordCollide(crab)))
+        console.log(enemyCollision)
         if(enemyCollision) {
             console.log('impacto')
-            this.enemyCrab = this.enemyCrab.filter(element => element != enemyCollision)
+            this.enemyCrab = this.enemyCrab.filter(crab => crab != enemyCollision)
+            this.player.weapon.swords = this.player.weapon.swords.filter(sword => sword != swordCollision)
         }
     }
 
