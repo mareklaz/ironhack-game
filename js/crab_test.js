@@ -17,8 +17,10 @@ class Crab {
         // In game
         this.damage = 5
         // Graphics
+        this.rightSprite = './assets/img/crabRight.png'
+        this.leftSprite = './assets/img/crabLeft.png'
         this.img = new Image()
-        this.img.src = './assets/img/crab2.png'
+        this.img.src = this.rightSprite
         this.img.frames = 16
         this.img.frameIndex = 0
         this.tick = 0
@@ -30,17 +32,17 @@ class Crab {
 
     move() {
         this.playerActions()
-        // this.position.x += this.velocity.x
-        // this.position.y += this.velocity.y
-        // if(this.position.y + this.height + this.velocity.y <= this.maxY) {
-        //     this.velocity.y += this.gravity
-        // } else {
-        //     this.velocity.y = 0
-        // }
+        
+        if(this.position.y + this.height + this.velocity.y >= this.maxY) {
+            this.velocity.y += this.gravity
+        } else {
+            this.velocity.y = 0
+        }
+        this.position.y += this.velocity.y
         this.position.x += this.velocity.x
     }
 
-    crabCollide(player) {
+    enemyCollid(player) {
         const collideX = player.position.x + player.width > this.position.x && player.position.x < this.position.x + this.width
         const collideY = player.position.y < this.position.y + this.height && player.position.y + player.height > this.position.y
         return collideX && collideY
@@ -48,15 +50,22 @@ class Crab {
 
     playerActions() {
         this.collisionLimits()
-        // this.isOnFloor()
+        this.isOnFloor()
+        if(Math.sign(this.velocity.x) === 1) {
+            this.img.src = this.rightSprite
+        } else if (Math.sign(this.velocity.x) === -1) {
+            this.img.src = this.leftSprite
+        } else {
+            this.img.src = this.rightSprite
+        }
     }
 
-    // isOnFloor() {
-    //     if (this.position.y + this.height >= this.maxY) {
-    //         this.velocity.y = 0
-    //         this.position.y = Math.round(this.maxY - this.height)
-    //     }
-    // }
+    isOnFloor() {
+        if (this.position.y + this.height >= this.maxY) {
+            this.velocity.y = 0
+            this.position.y = Math.round(this.maxY - this.height)
+        }
+    }
 
     collisionLimits() {
         if(this.position.x + this.width >= RIGHT_LIMIT) {

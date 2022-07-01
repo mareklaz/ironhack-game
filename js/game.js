@@ -25,10 +25,9 @@ class Game {
         this.mainTheme.volume = 0.5
         
         // Enemies
-        this.enemyCrab = [
-            new Crab(this.ctx, 900, 2),
-            new Crab(this.ctx, 200, 4)
-        ]
+        this.enemiesCounter = 0
+        this.enemies = []
+
         // Level
         this.platform = [ // width, height, x, y
             new Platform(this.ctx, 192, 64, 200, 700),
@@ -44,15 +43,14 @@ class Game {
             new PalmBack(this.ctx, 1000, 600)
         ]
         // Treasures
+        this.coinCounter = 0
+        this.coins = []
+        
         this.coin = [
             new Coin(this.ctx, 230, 650),
             new Coin(this.ctx, 330, 650),
             new Coin(this.ctx, 230, 450),
             new Coin(this.ctx, 330, 450),
-            new Coin(this.ctx, 200, 850),
-            new Coin(this.ctx, 300, 850),
-            new Coin(this.ctx, 400, 850),
-            new Coin(this.ctx, 500, 850),
             new Coin(this.ctx, 500, 600),
             new Coin(this.ctx, 800, 600)
         ]
@@ -74,7 +72,9 @@ class Game {
             this.clear();
             this.draw();
             this.move();
-            this.cloudEngine() 
+            this.cloudEngine()
+            this.coinEngine()
+            this.enemyEngine()
             this.mainTheme.play()
         }, 1000 / 60)
     }
@@ -83,7 +83,7 @@ class Game {
         this.checkCollision();
         this.bigCloud.move()
         this.player.move()
-        this.enemyCrab.forEach(element => {element.move()})
+        this.enemies.forEach(element => {element.move()})
         this.smallCloud1.forEach(element => {element.move()})
     }
 
@@ -115,6 +115,7 @@ class Game {
         
         // Various Element
         this.platform.forEach(element => {element.draw()})
+        this.coins.forEach(element => {element.draw()})
         this.coin.forEach(element => {element.draw()})
         this.potion.forEach(element => {element.draw()})
         this.diamond.forEach(element => {element.draw()})
@@ -122,7 +123,7 @@ class Game {
         // Level
         
         // Player & Enemies
-        this.enemyCrab.forEach(element => {element.draw()})
+        this.enemies.forEach(element => {element.draw()})
         this.player.draw()
         // GUI
         this.hpContainer.draw()
@@ -131,6 +132,43 @@ class Game {
         this.keyPoints.draw()
         
         // Test
+    }
+
+    // Random Spawn Coin
+    randomSpawnCoin() {
+        let randomX = Math.round(Math.random() * (100 - 1200) + 1200)
+        console.log(randomX)
+        this.coins.push(new Coin(this.ctx, randomX, FLOOR - 50))
+    }
+
+    coinEngine() {
+        this.coinCounter++
+        if(this.coins.length <= 6) {
+            
+            if (this.coinCounter % 400 === 0) {
+                //console.log(this.coins)
+                this.randomSpawnCoin()
+            }
+        }
+        
+    }
+    // Random Spawn Enemey
+    randomSpawnEnemy() {
+        let randomX = Math.round(Math.random() * (100 - 1200) + 1200)
+        console.log(randomX)
+        this.enemies.push(new Crab(this.ctx, randomX, 2))
+    }
+
+    enemyEngine() {
+
+        if(this.enemies.length <= 5) {
+            this.enemiesCounter++;
+            if (this.enemiesCounter % 400 === 0) {
+                console.log(this.enemies)
+                this.randomSpawnEnemy()
+            }
+        }
+        
     }
 
     // Collisions & Triggers
@@ -165,6 +203,13 @@ class Game {
             this.coinPoints.score += 20
             this.coin = this.coin.filter(element => element != coinCollision)
         }
+
+        let coisnCollision = this.coins.find(element => element.coinCollide(this.player))
+        if(coisnCollision) {
+            coisnCollision.coinSound.play()
+            this.coinPoints.score += 20
+            this.coins = this.coins.filter(element => element != coisnCollision)
+        }
     }
 
     diamondTrigger() {
@@ -197,9 +242,9 @@ class Game {
     }
 
     enemyCollide() {
-        let enemyCollision = this.enemyCrab.some(element => element.crabCollide(this.player))
+        let enemyCollision = this.enemies.some(enemy => enemy.enemyCollid(this.player))
         if(enemyCollision && !this.player.isInvincible) {
-            this.enemyCrab.some(crab => crab.soundAttack.play())
+            this.enemies.some(enemy => enemy.soundAttack.play())
             this.player.health -= 5
             this.player.isInvincible = true
             setTimeout(() => {
@@ -209,12 +254,12 @@ class Game {
     }
     
     swordCollide() {
-        let enemyCollision = this.enemyCrab.find(crab => this.player.weapon.swords.some(sword => sword.swordCollide(crab)))
-        let swordCollision = this.player.weapon.swords.find(element => this.enemyCrab.some(crab => element.swordCollide(crab)))
+        let enemyCollision = this.enemies.find(enemy => this.player.weapon.swords.some(sword => sword.swordCollide(enemy)))
+        let swordCollision = this.player.weapon.swords.find(element => this.enemies.some(enemy => element.swordCollide(enemy)))
 
         if(enemyCollision) {
             console.log('impacto')
-            this.enemyCrab = this.enemyCrab.filter(crab => crab != enemyCollision)
+            this.enemies = this.enemies.filter(enemy => enemy != enemyCollision)
             this.coinPoints.score += 100
             this.player.weapon.swords =this.player.weapon.swords.filter(sword => sword != swordCollision)
         }

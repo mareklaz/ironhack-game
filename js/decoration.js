@@ -34,9 +34,8 @@ class PalmBack {
         //     this.width,
         //     this.height
         // )
-        
     }
-
+    
     animate() {
         this.tick++
         
