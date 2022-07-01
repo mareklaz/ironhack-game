@@ -64,7 +64,7 @@ class Potion {
             x: x,
             y: y
         }
-        this.restore = 100
+        this.restore = 20
         // Graphics
         this.img = new Image()
         this.img.src = './assets/img/potion.png'
