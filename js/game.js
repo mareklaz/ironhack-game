@@ -144,23 +144,28 @@ class Game {
     coinEngine() {
         this.coinCounter++
         if(this.coins.length <= 6) {
-            
+
             if (this.coinCounter % 400 === 0) {
                 //console.log(this.coins)
                 this.randomSpawnCoin()
             }
         }
-        
     }
     // Random Spawn Enemey
     randomSpawnEnemy() {
-        let randomX = Math.round(Math.random() * (100 - 1200) + 1200)
-        console.log(randomX)
-        this.enemies.push(new Crab(this.ctx, randomX, 2))
+        let randomSide = Math.round(Math.random() * 1)
+        if(randomSide === 1) {
+            let randomX = Math.round(Math.random() * (100 - 300) + 300)
+            console.log(randomX)
+            this.enemies.push(new Crab(this.ctx, randomX, 2))
+        } else if(randomSide === 0) {
+            let randomX = Math.round(Math.random() * (900 - 1200) + 1200)
+            console.log(randomX)
+            this.enemies.push(new Crab(this.ctx, randomX, 2))
+        }
     }
-
+a
     enemyEngine() {
-
         if(this.enemies.length <= 5) {
             this.enemiesCounter++;
             if (this.enemiesCounter % 400 === 0) {
@@ -168,7 +173,6 @@ class Game {
                 this.randomSpawnEnemy()
             }
         }
-        
     }
 
     // Collisions & Triggers
@@ -265,7 +269,7 @@ class Game {
         }
     }
 
-    damageHpBar() {
+    damageHpBar() { 
         Math.floor(this.hpBar.width = (342 * this.player.health) / 100)
     }
     
