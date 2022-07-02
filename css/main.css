@@ -29,6 +29,8 @@ h1 {
 }
 
 .start-btn {
+    position: absolute;
+    margin-top: -500px;
     font-family: pixelFont;
     font-size: 24px;
     width: 100px;

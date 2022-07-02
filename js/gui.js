@@ -49,9 +49,8 @@ class healthBarGUI {
         // this.ctx.font = "44px pixelFont";
         // this.ctx.fillStyle = "#DC4949";
         // this.ctx.textAlign = "right";
-        // this.ctx.fillText(String(this.width), 1000, 110);
+        // this.ctx.fillText(this.width, 1000, 110);
     }
-    
 }
 //*************** Coin GUI ***************//
 class coinGUI {
@@ -79,7 +78,7 @@ class coinGUI {
         this.ctx.font = "44px pixelFont";
         this.ctx.fillStyle = "#fff";
         this.ctx.textAlign = "right";
-        this.ctx.fillText(String(this.score), 1190, 110);
+        this.ctx.fillText(this.score, 1190, 110);
     }
     
 }
@@ -111,6 +110,8 @@ class keyGUI {
         this.ctx.fillStyle = "#eed878";
         this.ctx.textAlign = "right";
         this.ctx.fillText(String(this.keyN), 790, 110);
+        
     }
+
     
 }

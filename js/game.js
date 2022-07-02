@@ -23,6 +23,8 @@ class Game {
         this.mainTheme = new Audio()
         this.mainTheme.src = './assets/sound/game1.mp3'
         this.mainTheme.volume = 0.5
+        this.youLose = new Audio()
+        this.youLose.src = './assets/sound/youlose.mp3'
         
         // Enemies
         this.enemiesCounter = 0
@@ -30,10 +32,10 @@ class Game {
         
         // Level
         this.platform = [ // width, height, x, y
-            new Platform(this.ctx, 200, 700),
-            new Platform(this.ctx, 200, 500),
-            new Platform(this.ctx, 900, 500),
-            new Platform(this.ctx, 900, 700),
+            new Platform(this.ctx, 350, 700),
+            new Platform(this.ctx, 150, 500),
+            new Platform(this.ctx, 950, 500),
+            new Platform(this.ctx, 750, 700),
             new Platform(this.ctx, 550, 500),
         ]
         this.palmBack = [
@@ -46,14 +48,14 @@ class Game {
         this.coinCounter = 0
         this.coins = []
         
-        this.coin = [
-            new Coin(this.ctx, 230, 650),
-            new Coin(this.ctx, 330, 650),
-            new Coin(this.ctx, 230, 450),
-            new Coin(this.ctx, 330, 450),
-            new Coin(this.ctx, 500, 600),
-            new Coin(this.ctx, 800, 600)
-        ]
+        // this.coin = [
+        //     new Coin(this.ctx, 230, 650),
+        //     new Coin(this.ctx, 330, 650),
+        //     new Coin(this.ctx, 230, 450),
+        //     new Coin(this.ctx, 330, 450),
+        //     new Coin(this.ctx, 500, 600),
+        //     new Coin(this.ctx, 800, 600)
+        // ]
         this.diamond = [
             new Diamond(this.ctx, 980, 450),
         ]
@@ -75,7 +77,7 @@ class Game {
             this.cloudEngine()
             this.coinEngine()
             this.enemyEngine()
-            // this.mainTheme.play()
+            this.mainTheme.play()
         }, 1000 / 60)
     }
 
@@ -115,12 +117,11 @@ class Game {
         // Various Element
         this.platform.forEach(element => {element.draw()})
         this.coins.forEach(element => {element.draw()})
-        this.coin.forEach(element => {element.draw()})
         this.potion.forEach(element => {element.draw()})
         this.diamond.forEach(element => {element.draw()})
         this.key.forEach(element => {element.draw()})
         // Level
-        
+        this.test()
         // Player & Enemies
         this.enemies.forEach(element => {element.draw()})
         this.player.draw()
@@ -141,9 +142,9 @@ class Game {
 
     coinEngine() {
         this.coinCounter++
-        if(this.coins.length <= 6) {
+        if(this.coins.length <= 10) {
 
-            if (this.coinCounter % 100000 === 0) {
+            if (this.coinCounter % 800 === 0) {
                 //console.log(this.coins)
                 this.randomSpawnCoin()
             }
@@ -151,20 +152,21 @@ class Game {
     }
     // Random Spawn Enemey
     randomSpawnEnemy() {
-        let randomSide = Math.round(Math.random() * 1)
+        let randomSide = Math.round(Math.random())
+        let randomPatrol = Math.round(Math.random())
         if(randomSide === 1) {
             let randomX = Math.round(Math.random() * (100 - 300) + 300)
-            this.enemies.push(new Crab(this.ctx, randomX, 2))
+            this.enemies.push(new Crab(this.ctx, randomX, 2, randomPatrol))
         } else if(randomSide === 0) {
             let randomX = Math.round(Math.random() * (900 - 1200) + 1200)
-            this.enemies.push(new Crab(this.ctx, randomX, 2))
+            this.enemies.push(new Crab(this.ctx, randomX, 2, randomPatrol))
         }
     }
 
     enemyEngine() {
-        if(this.enemies.length <= 1) {
+        if(this.enemies.length <= 10) {
             this.enemiesCounter++;
-            if (this.enemiesCounter % 1 === 0) {
+            if (this.enemiesCounter % 100 === 0) {
                 this.randomSpawnEnemy()
             }
         }
@@ -194,25 +196,39 @@ class Game {
             this.player.maxY = FLOOR
         }
         // Enemy
-        // let enemyCollidePlatform = this.enemies.find(enemy => this.platform.find(platform => platform.platformCollideEnemy(enemy)))
-        // let platformCollidedEnemy = this.platform.find(platform => this.enemies.find(enemies => platform.platformCollideEnemy(enemies)))
- 
-        // if(enemyCollidePlatform) {
-        //     enemyCollidePlatform.velocity.y = 0
-        //     enemyCollidePlatform.maxY = platformCollidedEnemy.position.y
-        //     enemyCollidePlatform.position.y = enemyCollidePlatform.maxY - enemyCollidePlatform.height
-        // } 
+        let platformCol;
+        let enemyCol = this.enemies.find(enemy => {
+            platformCol = this.platform.find(platform => platform.platformCollideEnemy(enemy))
+            return platformCol
+        })
+        //let platformCol = this.platform.find(platform => this.enemies.find(enemies => platform.platformCollideEnemy(enemies)))
+        // console.log(enemyCol)
+        // console.log(platformCol)
+
+        if(enemyCol && platformCol) {
+            enemyCol.velocity.y = 0
+            enemyCol.maxY = platformCol.position.y
+            enemyCol.position.y = enemyCol.maxY - enemyCol.height
+            enemyCol.velocity.y = 0
+            enemyCol.limits.left = platformCol.position.x
+            enemyCol.limits.right = platformCol.position.x + platformCol.width
+            
+
+            // if(enemyCol.position.x + enemyCol.width >= platformCol.position.x + platformCol.width) {
+            //     console.log('object');
+            //     enemyCol.velocity.x *= -1
+            //     //enemyCol.position.x = Math.round((platformCol.x + platformCol.width) - enemyCol.width)
+            // }
+            // if(enemyCol.position.x <= platformCol.position.x) {
+            //     console.log('object');
+            //     enemyCol.velocity.x *= -1
+            //     //enemyCol.position.x = Math.round(platformCol.position.x)
+            // }
+        } 
         
     }
 
     coinTrigger() {
-        let coinCollision = this.coin.find(element => element.coinCollide(this.player))
-        if(coinCollision) {
-            coinCollision.coinSound.play()
-            this.coinPoints.score += 20
-            this.coin = this.coin.filter(element => element != coinCollision)
-        }
-
         let coisnCollision = this.coins.find(element => element.coinCollide(this.player))
         if(coisnCollision) {
             coisnCollision.coinSound.play()
@@ -236,7 +252,7 @@ class Game {
 
         } else if (this.player.health < 100 && potionCollision) {
             potionCollision.potionSound.play()
-            this.player.health +=  potionCollision.restore
+            this.player.health += potionCollision.restore
             this.potion = this.potion.filter(element => element != potionCollision)
         }
     }
@@ -254,7 +270,7 @@ class Game {
         let enemyCollision = this.enemies.some(enemy => enemy.enemyCollid(this.player))
         if(enemyCollision && !this.player.isInvincible) {
             this.enemies.some(enemy => enemy.soundAttack.play())
-            this.player.health -= 5
+            this.player.health -= 50
             this.player.isInvincible = true
             setTimeout(() => {
                 this.player.isInvincible = false
@@ -267,7 +283,6 @@ class Game {
         let swordCollision = this.player.weapon.swords.find(element => this.enemies.some(enemy => element.swordCollide(enemy)))
 
         if(enemyCollision) {
-            console.log('impacto')
             this.enemies = this.enemies.filter(enemy => enemy != enemyCollision)
             this.coinPoints.score += 100
             this.player.weapon.swords =this.player.weapon.swords.filter(sword => sword != swordCollision)
@@ -277,20 +292,28 @@ class Game {
 
     damageHpBar() { 
         Math.floor(this.hpBar.width = (342 * this.player.health) / 100)
+        console.log(this.player.health)
+        // if(this.player.health < 0) {
+        //     this.gameOver()
+        // }
     }
     
     randomTreasure(posX, posY) {
         let randomNumber = Math.floor(Math.random()*100+1)
-        console.log(randomNumber)
+            // console.log(randomNumber)
         if (randomNumber <= 60) {
-            console.log('nada')
+            // console.log('nada')
         } else if (randomNumber <= 85) {
+            // console.log('moneda')
             this.coins.push(new Coin(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 90) {
+            // console.log('diamante')
             this.diamond.push(new Diamond(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 95) {
+            // console.log('pocion')
             this.potion.push(new Potion(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 100) {
+            // console.log('llave')
             this.key.push(new Key(this.ctx, posX, posY + 15))
         }
         
@@ -304,6 +327,26 @@ class Game {
             this.ctx.canvas.width,
             this.ctx.canvas.height
         )
+        this.coins = this.coins.filter((coin) => !coin.isObsolete)
+    }
+
+    gameOver() {
+        
+        this.youLose.play();
+        this.mainTheme.src = './assets/sound/gameover.mp3';
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+        this.ctx.font = '140px pixelFont';
+        this.ctx.fillStyle = 'red';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 100);
+        
+    }  
+    test() {
+        this.ctx.font = "44px pixelFont";
+        this.ctx.fillStyle = "#000";
+        this.ctx.textAlign = "right";
+        this.ctx.fillText('PEPITO', 600, 600);
     }
 
 }

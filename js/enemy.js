@@ -1,12 +1,12 @@
 //*************** Crab Enemy ***************//
 class Crab {
-    constructor (ctx, positionX, vx) {
+    constructor (ctx, positionX, vx, patrol = false) {
         this.ctx = ctx
         this.width = 84  
         this.height = 60
         this.position = {
             x: positionX,
-            y: 450
+            y: 320
         }
         this.velocity = {
             x: vx,
@@ -16,7 +16,8 @@ class Crab {
         this.maxY = FLOOR
         this.maxX = 0
         // In game
-        this.damage = 5
+        this.patrol = patrol
+        this.damage = 100
         // Graphics
         this.rightSprite = './assets/img/crabRight.png'
         this.leftSprite = './assets/img/crabLeft.png'
@@ -29,6 +30,10 @@ class Crab {
         this.soundAttack = new Audio();
         this.soundAttack.src = './assets/sound/attack.mp3';
         this.soundAttack.volume = 0.5
+        this.limits = {
+            left: LEFT_LIMIT,
+            right: RIGHT_LIMIT
+        }
     }
 
     move() {
@@ -63,19 +68,30 @@ class Crab {
 
     isOnFloor() {
         if (this.position.y + this.height >= this.maxY) {
-            this.velocity.y = 1
+            this.velocity.y = 0
             this.position.y = Math.round(this.maxY - this.height)
         }
     }
 
     collisionLimits() {
-        if(this.position.x + this.width >= RIGHT_LIMIT) {
-            this.velocity.x *= -1
-            this.position.x = Math.round(RIGHT_LIMIT - this.width)
+        const THRESHOLD = 30;
+        if(!this.patrol && !this.isOnFloor()) {
+            if(this.position.x + this.width >= this.limits.right + THRESHOLD || this.position.x <= this.limits.left - THRESHOLD) {
+                this.maxY = FLOOR
+                this.limits = {
+                    left: LEFT_LIMIT,
+                    right: RIGHT_LIMIT
+                }
+            }
         }
-        if(this.position.x <= LEFT_LIMIT) {
+
+        if(this.position.x + this.width >= this.limits.right + THRESHOLD) {
             this.velocity.x *= -1
-            this.position.x = Math.round(LEFT_LIMIT)
+            this.position.x = Math.round(this.limits.right - this.width + THRESHOLD)
+        }
+        if(this.position.x <= this.limits.left - THRESHOLD) {
+            this.velocity.x *= -1
+            this.position.x = Math.round(this.limits.left - THRESHOLD)
         }
     }
     

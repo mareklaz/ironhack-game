@@ -17,6 +17,10 @@ class Coin {
         // Sound
         this.coinSound = new Audio()
         this.coinSound.src = './assets/sound/coin2.wav'
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, 10000)
     }
 
     coinCollide(player) {
