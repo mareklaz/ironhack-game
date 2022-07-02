@@ -8,8 +8,12 @@ class Game {
         this.background = new Background(this.ctx)
         this.bigCloud = new BigClouds(this.ctx)
         this.waterReflect = new WaterReflect(this.ctx)
-        this.smallCloud1 = []
-        this.smallCloud1count = 0
+        this.smallCloud = []
+        this.smallCloudcount = 0
+
+        this.platformsPrint = new PlatformPrint(this.ctx)
+        this.backLevelPrint = new BackLevelPrint(this.ctx)
+        this.frontLevelPrint = new FrontLevelPrint(this.ctx)
         // Player
         this.player = new Player(this.ctx)
         this.sword = new Sword(this.ctx)
@@ -31,31 +35,22 @@ class Game {
         this.enemies = []
         
         // Level
-        this.platform = [ // width, height, x, y
-            new Platform(this.ctx, 350, 700),
-            new Platform(this.ctx, 150, 500),
-            new Platform(this.ctx, 950, 500),
-            new Platform(this.ctx, 750, 700),
-            new Platform(this.ctx, 550, 500),
+        this.platform = [ // x, y, width, height
+            new Platform(this.ctx, 64, 384, 448, 128),
+            new Platform(this.ctx, 704, 384, 192, 128),
+            new Platform(this.ctx, 192, 640, 192, 64),
+            new Platform(this.ctx, 512, 640, 192, 64),
+            new Platform(this.ctx, 896, 640, 192, 64),
+            new Platform(this.ctx, 206, 768, 46, 5),
+            new Platform(this.ctx, 580, 498, 46, 5),
+            new Platform(this.ctx, 1097, 384, 46, 5),
+            new Platform(this.ctx, 770, 716, 46, 5),
         ]
-        this.palmBack = [
-            new PalmBack(this.ctx, 100, 740),
-            new PalmBack(this.ctx, 40, 800),
-            new PalmBack(this.ctx, 800, 790),
-            new PalmBack(this.ctx, 1000, 600)
-        ]
+
         // Treasures
         this.coinCounter = 0
         this.coins = []
         
-        // this.coin = [
-        //     new Coin(this.ctx, 230, 650),
-        //     new Coin(this.ctx, 330, 650),
-        //     new Coin(this.ctx, 230, 450),
-        //     new Coin(this.ctx, 330, 450),
-        //     new Coin(this.ctx, 500, 600),
-        //     new Coin(this.ctx, 800, 600)
-        // ]
         this.diamond = [
             new Diamond(this.ctx, 980, 450),
         ]
@@ -86,19 +81,19 @@ class Game {
         this.bigCloud.move()
         this.player.move()
         this.enemies.forEach(element => {element.move()})
-        this.smallCloud1.forEach(element => {element.move()})
+        this.smallCloud.forEach(element => {element.move()})
     }
 
     cloudGenerator () {
-        this.smallCloud1.push(new SmallCloud1(this.ctx))
+        this.smallCloud.push(new SmallCloud1(this.ctx))
     }
 
     cloudEngine() {
-        this.smallCloud1count++;
+        this.smallCloudcount++;
 
-        if (this.smallCloud1count % 800 === 0) {
+        if (this.smallCloudcount % 800 === 0) {
             
-            this.smallCloud1 = this.smallCloud1.filter(obs => obs.isVisible())
+            this.smallCloud = this.smallCloud.filter(obs => obs.isVisible())
             this.cloudGenerator()
         }
     }
@@ -106,13 +101,15 @@ class Game {
     draw() {
         // Background
         this.background.draw()
-        this.smallCloud1.forEach(element => {element.draw()})
+        this.smallCloud.forEach(element => {element.draw()})
         this.bigCloud.draw()
-        
-        
         this.waterReflect.draw()
-        this.palmBack.forEach(element => {element.draw()})
-        this.window.draw()
+        this.backLevelPrint.draw()
+        this.platformsPrint.draw()
+        this.frontLevelPrint.draw()
+
+       
+        
         
         // Various Element
         this.platform.forEach(element => {element.draw()})
@@ -121,11 +118,12 @@ class Game {
         this.diamond.forEach(element => {element.draw()})
         this.key.forEach(element => {element.draw()})
         // Level
-        this.test()
+
         // Player & Enemies
         this.enemies.forEach(element => {element.draw()})
         this.player.draw()
         // GUI
+        this.window.draw()
         this.hpContainer.draw()
         this.hpBar.draw()
         this.coinPoints.draw()
@@ -292,7 +290,7 @@ class Game {
 
     damageHpBar() { 
         Math.floor(this.hpBar.width = (342 * this.player.health) / 100)
-        console.log(this.player.health)
+        
         // if(this.player.health < 0) {
         //     this.gameOver()
         // }
@@ -342,11 +340,5 @@ class Game {
         this.ctx.fillText('Game Over', this.ctx.canvas.width / 2, this.ctx.canvas.height / 2 + 100);
         
     }  
-    test() {
-        this.ctx.font = "44px pixelFont";
-        this.ctx.fillStyle = "#000";
-        this.ctx.textAlign = "right";
-        this.ctx.fillText('PEPITO', 600, 600);
-    }
 
 }

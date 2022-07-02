@@ -98,7 +98,7 @@ class Player {
         }
 
         if(this.actions.jump && !this.isJumping()) {
-            this.velocity.y -= 18
+            this.velocity.y -= 16
             this.jumpSound.play()
         }
         if (this.actions.shoot) {
@@ -134,6 +134,10 @@ class Player {
         if(this.position.x <= LEFT_LIMIT) {
             this.velocity.x = 0
             this.position.x = Math.round(LEFT_LIMIT)
+        }
+        if(this.position.y <= TOP_LIMIT / 2) {
+            this.velocity.y *= -0.1
+            this.position.y = Math.round(TOP_LIMIT / 2)
         }
     }
     
