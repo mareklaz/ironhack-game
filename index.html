@@ -10,10 +10,30 @@
 <body>
     
     <div class="container">
-        <h1>Ironhack Pirates Adventure</h1>
+        
         <canvas id="canvas" class="canvas" width="1280" height="960"></canvas>
-        <!-- <button id="startBtn" class="start-btn">Start</button> -->
+        <div class="title" id="titleScreen">
+            <h1>Ironhack Pirates Adventure</h1>
+            <div class="help">
+                <div>
+                    <img src="./assets/img/help1.png" alt="">
+                    <p>Press 'Space' to Jump</p>
+                </div>
+                <div>
+                    <img src="./assets/img/help2.png" alt="">
+                    <p>Press 'A' to move left or 'D' to move right</p>
+                </div>
+                <div>
+                    <img src="./assets/img/help3.png" alt="">
+                    <p>Press 'Q' or 'Shift' to throw knives</p>
+                </div>                
+            </div>
+            <button id="startBtn" class="start-btn">Start</button>
+        </div>
+        <button id="restartBtn" class="restart-btn" onclick="window.location.reload()">Restart</button>
     </div>
+
+
 
     <script src="js/constants.js"></script>
     <script src="js/sword.js"></script>
@@ -25,6 +45,7 @@
     <script src="js/crab.js"></script>
     <script src="js/player.js"></script>
     <script src="js/platform.js"></script>
+    <script src="js/level.js"></script>
     <script src="js/game.js"></script>
     <script src="js/main.js"></script>
 

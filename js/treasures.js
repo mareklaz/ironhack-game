@@ -1,3 +1,68 @@
+const timeOut = 10000
+
+//*************** Esmerald ***************//
+class Esmerald {
+    constructor(ctx, x, y) {
+        this.ctx = ctx
+        this.width = 24
+        this.height = 24
+        this.position = {
+            x: x,
+            y: y
+        }
+        // In Game
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, timeOut)
+        // Graphics
+        this.img = new Image()
+        this.img.src = './assets/img/esmerald.png'
+        this.img.frames = 4
+        this.img.frameIndex = 0
+        this.tick = 0
+        // Sound
+        this.esmeraldSound = new Audio();
+        this.esmeraldSound.src = './assets/sound/diamond.mp3';
+        this.esmeraldSound.volume = 0.2
+    }
+
+    esmeraldCollide(player) {
+        const collideX = player.position.x + player.width > this.position.x && player.position.x < this.position.x + this.width
+        const collideY = player.position.y < this.position.y + this.height && player.position.y + player.height > this.position.y
+        return collideX && collideY
+    }
+
+    draw() {
+        this.ctx.drawImage(
+            this.img,
+            this.img.frameIndex * this.img.width / this.img.frames,
+            0,
+            this.img.width / this.img.frames,
+            this.img.height,
+            this.position.x,
+            this.position.y,
+            this.width,
+            this.height
+        )
+        this.animate()
+    }
+
+    animate() {
+        this.tick++
+        
+        if (this.tick > 4) {
+          this.tick = 0
+          this.img.frameIndex++
+        }
+        
+        if (this.img.frameIndex >= this.img.frames) {
+          this.img.frameIndex = 0
+        }
+    }
+}
+
+
 //*************** Coin ***************//
 class Coin {
     constructor(ctx, x, y) {
@@ -8,6 +73,11 @@ class Coin {
             x: x,
             y: y
         }
+        // In Game
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, timeOut)
         // Graphics
         this.img = new Image()
         this.img.src = './assets/img/coin.png'
@@ -17,10 +87,7 @@ class Coin {
         // Sound
         this.coinSound = new Audio()
         this.coinSound.src = './assets/sound/coin2.wav'
-        this.isObsolete = false
-        setTimeout(() => {
-            this.isObsolete = true
-        }, 10000)
+        
     }
 
     coinCollide(player) {
@@ -68,7 +135,12 @@ class Potion {
             x: x,
             y: y
         }
-        this.restore = 20
+        // In Game
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, timeOut)
+        this.restore = 100
         // Graphics
         this.img = new Image()
         this.img.src = './assets/img/potion.png'
@@ -124,6 +196,11 @@ class Diamond {
             x: x,
             y: y
         }
+        // In Game
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, timeOut)
         // Graphics
         this.img = new Image()
         this.img.src = './assets/img/diamond.png'
@@ -182,6 +259,11 @@ class Key {
             x: x,
             y: y
         }
+        // In Game
+        this.isObsolete = false
+        setTimeout(() => {
+            this.isObsolete = true
+        }, timeOut)
         // Graphics
         this.img = new Image()
         this.img.src = './assets/img/key.png'

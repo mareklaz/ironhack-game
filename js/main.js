@@ -4,9 +4,17 @@ const game = new Game(ctx);
 
 
 const startBtn = document.getElementById('startBtn')
+const restartBtn = document.getElementById('restartBtn')
+const titleScreen = document.getElementById('titleScreen')
+console.log(titleScreen)
 
-game.start()
+startBtn.addEventListener('click', () => {
+    
+    titleScreen.style.display = 'none'
+    game.start()
+  
+})
 
-// startBtn.addEventListener('click', () => {
-//   game.start()
-// })
+restartBtn.addEventListener('click', () => {
+    restartBtn.style.display = 'none'
+})

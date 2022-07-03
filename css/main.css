@@ -7,6 +7,8 @@
 html {
     width: 100%;
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -21,6 +23,10 @@ h1 {
     padding: 10px 30px;
 }
 
+p {
+    font-size: 16px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -28,19 +34,68 @@ h1 {
     align-items: center;
 }
 
+.title {
+    position: fixed;
+    width: 1280px;
+    height: 960px;
+    background-color: #9f9dab;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.help {
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	align-content: stretch;
+    row-gap: 100px;
+    
+}
+
+.help div {
+    width: 250px;
+    display: flex;
+	flex-direction: column;
+    justify-content: center;
+	align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
 .start-btn {
-    position: absolute;
-    margin-top: -500px;
     font-family: pixelFont;
     font-size: 24px;
-    width: 100px;
+    width: 200px;
     margin: 10px;
     padding: 20px 10px;
-    color: white;
-    background-color: #212f3c;
+    color: #fff;
+    background-color: #4f4a67;
+    border: none;
+}
+
+.restart-btn {
+    display: none;
+    top: 650px;
+    position: absolute;
+    font-family: pixelFont;
+    font-size: 24px;
+    width: 200px;
+    margin: 10px;
+    padding: 20px 10px;
+    color: #fff;
+    background-color: #ba2a2a;
     border: none;
 }
 
 .start-btn:hover {
-    background-color: #2e4053;
+    background-color: #756e98;
 }
+
+.resstart-btn:hover {
+    background-color: #d45656;
+}
+

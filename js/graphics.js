@@ -71,11 +71,11 @@ class Background {
 class PlatformPrint {
   constructor(ctx) {
       this.ctx = ctx
-      this.width = 1083
-      this.height = 520
+      this.width = 1147
+      this.height = 610
       this.position = {
-          x: 64,
-          y: 376
+          x: 0,
+          y: 286
       }
       // Graphics
       this.img = new Image()
@@ -96,11 +96,11 @@ class PlatformPrint {
 class BackLevelPrint {
   constructor(ctx) {
       this.ctx = ctx
-      this.width = 875
-      this.height = 384
+      this.width = 1084
+      this.height = 832
       this.position = {
-          x: 167,
-          y: 576
+          x: 0,
+          y: 128
       }
       // Graphics
       this.img = new Image()
