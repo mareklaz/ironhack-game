@@ -28,8 +28,13 @@ class Player {
         this.weapon = new Weapon(this)
         this.sword = new Sword(this.ctx)
         // Graphics
-        this.rightSprite = './assets/img/playerRight.png'
-        this.leftSprite = './assets/img/playerLeft.png'
+        
+        this.rightSpriteNormal = './assets/img/playerRight.png'
+        this.rightSpriteDamage = './assets/img/playerRightDamage.png'
+        this.rightSprite = this.rightSpriteNormal
+        this.leftSpriteNormal = './assets/img/playerLeft.png'
+        this.leftSpriteDamage = './assets/img/playerLeftDamage.png'
+        this.leftSprite = this.leftSpriteNormal
         this.img = new Image()
         this.img.src = this.rightSprite
         this.img.frames = 12

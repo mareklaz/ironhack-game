@@ -36,30 +36,24 @@ class Game {
         
         // Level
         this.platform = [ // x, y, width, height
-            new Platform(this.ctx, 64, 384, 448, 128),
-            new Platform(this.ctx, 704, 384, 192, 128),
-            new Platform(this.ctx, 192, 640, 192, 64),
-            new Platform(this.ctx, 512, 640, 192, 64),
-            new Platform(this.ctx, 896, 640, 192, 64),
-            new Platform(this.ctx, 206, 768, 46, 5),
-            new Platform(this.ctx, 580, 498, 46, 5),
-            new Platform(this.ctx, 1097, 384, 46, 5),
-            new Platform(this.ctx, 770, 716, 46, 5),
+            new Platform(this.ctx, 'plataforma1', 64, 384, 448, 128, true, 0),
+            new Platform(this.ctx, 'plataforma2', 704, 384, 192, 128, true, 0),
+            new Platform(this.ctx, 'plataforma3', 192, 640, 192, 64, true, 0),
+            new Platform(this.ctx, 'plataforma4', 512, 640, 192, 64, true, 0),
+            new Platform(this.ctx, 'plataforma5', 896, 640, 192, 64, true, 0),
+            new Platform(this.ctx, 'plataforma6', 206, 768, 46, 5, false, 0),
+            new Platform(this.ctx, 'plataforma7', 580, 498, 46, 5, false, 0),
+            new Platform(this.ctx, 'plataforma8', 1097, 384, 46, 5, false, 0),
+            new Platform(this.ctx, 'plataforma9', 770, 716, 46, 5, false, 0),
         ]
 
         // Treasures
+        this.timeSpawn = 0
         this.coinCounter = 0
         this.coins = []
-        
-        this.diamond = [
-            new Diamond(this.ctx, 980, 450),
-        ]
-        this.potion = [
-            new Potion(this.ctx, 980, 650)
-        ]
-        this.key = [
-            new Key(this.ctx, 300, 300)
-        ]
+        this.diamonds = []
+        this.potions = []
+        this.keys = []
 
     }
 
@@ -70,7 +64,6 @@ class Game {
             this.draw();
             this.move();
             this.cloudEngine()
-            this.coinEngine()
             this.enemyEngine()
             this.mainTheme.play()
         }, 1000 / 60)
@@ -84,20 +77,7 @@ class Game {
         this.smallCloud.forEach(element => {element.move()})
     }
 
-    cloudGenerator () {
-        this.smallCloud.push(new SmallCloud1(this.ctx))
-    }
-
-    cloudEngine() {
-        this.smallCloudcount++;
-
-        if (this.smallCloudcount % 800 === 0) {
-            
-            this.smallCloud = this.smallCloud.filter(obs => obs.isVisible())
-            this.cloudGenerator()
-        }
-    }
-
+    
     draw() {
         // Background
         this.background.draw()
@@ -106,22 +86,20 @@ class Game {
         this.waterReflect.draw()
         this.backLevelPrint.draw()
         this.platformsPrint.draw()
-        this.frontLevelPrint.draw()
+        
 
-       
-        
-        
         // Various Element
         this.platform.forEach(element => {element.draw()})
         this.coins.forEach(element => {element.draw()})
-        this.potion.forEach(element => {element.draw()})
-        this.diamond.forEach(element => {element.draw()})
-        this.key.forEach(element => {element.draw()})
+        this.potions.forEach(element => {element.draw()})
+        this.diamonds.forEach(element => {element.draw()})
+        this.keys.forEach(element => {element.draw()})
         // Level
 
         // Player & Enemies
         this.enemies.forEach(element => {element.draw()})
         this.player.draw()
+        this.frontLevelPrint.draw()
         // GUI
         this.window.draw()
         this.hpContainer.draw()
@@ -132,26 +110,26 @@ class Game {
         // Test
     }
 
-    // Random Spawn Coin
-    randomSpawnCoin() {
-        let randomX = Math.round(Math.random() * (100 - 1200) + 1200)
-        this.coins.push(new Coin(this.ctx, randomX, FLOOR - 50))
+    
+
+    // Engine & Generators 
+    cloudGenerator () {
+        this.smallCloud.push(new SmallCloud1(this.ctx))
     }
+    cloudEngine() {
+        this.smallCloudcount++;
 
-    coinEngine() {
-        this.coinCounter++
-        if(this.coins.length <= 10) {
-
-            if (this.coinCounter % 800 === 0) {
-                //console.log(this.coins)
-                this.randomSpawnCoin()
-            }
+        if (this.smallCloudcount % 800 === 0) {
+            
+            this.smallCloud = this.smallCloud.filter(obs => obs.isVisible())
+            this.cloudGenerator()
         }
     }
-    // Random Spawn Enemey
+
     randomSpawnEnemy() {
         let randomSide = Math.round(Math.random())
         let randomPatrol = Math.round(Math.random())
+        
         if(randomSide === 1) {
             let randomX = Math.round(Math.random() * (100 - 300) + 300)
             this.enemies.push(new Crab(this.ctx, randomX, 2, randomPatrol))
@@ -164,23 +142,50 @@ class Game {
     enemyEngine() {
         if(this.enemies.length <= 10) {
             this.enemiesCounter++;
-            if (this.enemiesCounter % 100 === 0) {
+            if (this.enemiesCounter % 300 === 0) {
                 this.randomSpawnEnemy()
             }
+        }
+    }
+
+    spawnZone() {
+
+        // let treasuresArr = [this.coins, this.diamonds, this.potions, this.keys]
+        
+        let n = Math.round(Math.random() * this.platform.length)
+        const plataformaSelecionada = this.platform[n]
+        
+        if (plataformaSelecionada.spawnLoot) {
+            
+            let numero = Math.round((Math.random() * plataformaSelecionada.width)) // 0 - 192
+            console.log(plataformaSelecionada.position, plataformaSelecionada.width, plataformaSelecionada.name)
+            console.log(numero)
+            const posicionX = (plataformaSelecionada.position.x) + (numero)
+            console.log(posicionX)
+            const positionY = plataformaSelecionada.position.y - 50
+            this.timeSpawn++
+            if (this.timeSpawn % 5 === 0) {
+                if(this.diamonds.length <= 5) {
+                    this.diamonds.push(new Diamond(this.ctx, posicionX, positionY)) 
+                }
+            }
+        } else {
+            console.log('plataforma no looteable')
         }
     }
 
     // Collisions & Triggers
     checkCollision() {
         this.platformTrigger()
-        this.coinTrigger()
-        this.diamondTrigger()
-        this.potionTrigger()
-        this.keyTrigger()
-        this.enemyCollide()
+        this.coinsTrigger()
+        this.diamondsTrigger()
+        this.potionsTrigger()
+        this.keysTrigger()
+        this.enemiesCollide()
         this.swordCollide()
         // Damage Check HP Bar
         this.damageHpBar()
+        this.spawnZone()
         
     }
 
@@ -226,51 +231,56 @@ class Game {
         
     }
 
-    coinTrigger() {
-        let coisnCollision = this.coins.find(element => element.coinCollide(this.player))
-        if(coisnCollision) {
-            coisnCollision.coinSound.play()
+    coinsTrigger() {
+        let coinsCollision = this.coins.find(coin => coin.coinCollide(this.player))
+        if(coinsCollision) {
+            coinsCollision.coinSound.play()
             this.coinPoints.score += 20
-            this.coins = this.coins.filter(element => element != coisnCollision)
+            this.coins = this.coins.filter(coin => coin != coinsCollision)
         }
     }
 
-    diamondTrigger() {
-        let diamondCollision = this.diamond.find(element => element.diamondCollide(this.player))
-        if(diamondCollision) {
-            diamondCollision.diamondSound.play()
+    diamondsTrigger() {
+        let diamondsCollision = this.diamonds.find(diamond => diamond.diamondCollide(this.player))
+        if(diamondsCollision) {
+            diamondsCollision.diamondSound.play()
             this.coinPoints.score += 500
-            this.diamond = this.diamond.filter(element => element != diamondCollision)
+            this.diamonds = this.diamonds.filter(diamond => diamond != diamondsCollision)
         }
     }
 
-    potionTrigger() {
-        let potionCollision = this.potion.find(element => element.potionCollide(this.player))
-        if(this.player.health >= 100 && potionCollision) {
+    potionsTrigger() {
+        let potionsCollision = this.potions.find(potion => potion.potionCollide(this.player))
+        if(this.player.health >= 100 && potionsCollision) {
 
-        } else if (this.player.health < 100 && potionCollision) {
-            potionCollision.potionSound.play()
-            this.player.health += potionCollision.restore
-            this.potion = this.potion.filter(element => element != potionCollision)
+        } else if (this.player.health < 100 && potionsCollision) {
+            potionsCollision.potionSound.play()
+            this.player.health += potionsCollision.restore
+            this.potions = this.potions.filter(potion => potion != potionsCollision)
         }
     }
 
-    keyTrigger() {
-        let keyTrigger = this.key.find(element => element.keyCollide(this.player))
-        if(keyTrigger) {
+    keysTrigger() {
+        let keyCollision = this.keys.find(key => key.keyCollide(this.player))
+        if(keyCollision) {
             keyTrigger.diamondSound.play()
             this.keyPoints.keyN += 1
-            this.key = this.key.filter(element => element != keyTrigger)
+            this.keys = this.keys.filter(key => key != keyCollision)
         }
     }
 
-    enemyCollide() {
+    enemiesCollide() {
         let enemyCollision = this.enemies.some(enemy => enemy.enemyCollid(this.player))
         if(enemyCollision && !this.player.isInvincible) {
             this.enemies.some(enemy => enemy.soundAttack.play())
             this.player.health -= 50
             this.player.isInvincible = true
+            this.player.rightSprite = this.player.rightSpriteDamage
+            this.player.leftSprite = this.player.leftSpriteDamage
+
             setTimeout(() => {
+                this.player.rightSprite = this.player.rightSpriteNormal
+                this.player.leftSprite = this.player.leftSpriteNormal
                 this.player.isInvincible = false
             }, 2000);
         }
@@ -284,7 +294,7 @@ class Game {
             this.enemies = this.enemies.filter(enemy => enemy != enemyCollision)
             this.coinPoints.score += 100
             this.player.weapon.swords =this.player.weapon.swords.filter(sword => sword != swordCollision)
-            this.randomTreasure(enemyCollision.position.x, enemyCollision.position.y)
+            this.randomLoot(enemyCollision.position.x, enemyCollision.position.y)
         }
     }
 
@@ -296,7 +306,7 @@ class Game {
         // }
     }
     
-    randomTreasure(posX, posY) {
+    randomLoot (posX, posY) {
         let randomNumber = Math.floor(Math.random()*100+1)
             // console.log(randomNumber)
         if (randomNumber <= 60) {
@@ -306,13 +316,13 @@ class Game {
             this.coins.push(new Coin(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 90) {
             // console.log('diamante')
-            this.diamond.push(new Diamond(this.ctx, posX, posY + 15))
+            this.diamonds.push(new Diamond(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 95) {
             // console.log('pocion')
-            this.potion.push(new Potion(this.ctx, posX, posY + 15))
+            this.potions.push(new Potion(this.ctx, posX, posY + 15))
         } else if (randomNumber <= 100) {
             // console.log('llave')
-            this.key.push(new Key(this.ctx, posX, posY + 15))
+            this.keys.push(new Key(this.ctx, posX, posY + 15))
         }
         
     }
