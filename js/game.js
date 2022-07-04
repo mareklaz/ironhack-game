@@ -89,7 +89,6 @@ class Game {
         this.waterReflect.draw()
         this.backLevelPrint.draw()
         this.platformsPrint.draw()
-        
 
         // Various Element
         this.platform.forEach(element => {element.draw()})
@@ -122,7 +121,6 @@ class Game {
         this.smallCloudcount++;
 
         if (this.smallCloudcount % 800 === 0) {
-            
             this.smallCloud = this.smallCloud.filter(obs => obs.isVisible())
             this.smallCloud.push(new SmallCloud1(this.ctx))
         }

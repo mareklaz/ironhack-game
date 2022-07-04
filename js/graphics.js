@@ -9,7 +9,7 @@ class Window {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = '../assets/img/marco.png'
+        this.img.src = './assets/img/marco.png'
         this.img.frames = 4
         this.img.frameIndex = 0
     }
@@ -54,7 +54,7 @@ class Background {
       }
       // Graphics
       this.img = new Image()
-      this.img.src = '../assets/img/background.png'
+      this.img.src = './assets/img/background.png'
   }
 
   draw() {
@@ -79,7 +79,7 @@ class PlatformPrint {
       }
       // Graphics
       this.img = new Image()
-      this.img.src = '../assets/img/level1-plataformas.png'
+      this.img.src = './assets/img/level1-plataformas.png'
   }
 
   draw() {
@@ -104,7 +104,7 @@ class BackLevelPrint {
       }
       // Graphics
       this.img = new Image()
-      this.img.src = '../assets/img/level1-back.png'
+      this.img.src = './assets/img/level1-back.png'
   }
 
   draw() {
@@ -129,7 +129,7 @@ class FrontLevelPrint {
       }
       // Graphics
       this.img = new Image()
-      this.img.src = '../assets/img/level1-front.png'
+      this.img.src = './assets/img/level1-front.png'
   }
 
   draw() {
@@ -157,7 +157,7 @@ class BigClouds {
             y: 0
         }
         this.img = new Image()
-        this.img.src = "../assets/img/bigCloud.png"
+        this.img.src = './assets/img/bigCloud.png'
         
     }
   
@@ -203,7 +203,7 @@ class SmallCloud1 {
           y: 0
       }
       this.img = new Image()
-      this.img.src = "../assets/img/smartCloud1.png"
+      this.img.src = './assets/img/smartCloud1.png'
       
   }
 
@@ -238,7 +238,7 @@ class WaterReflect {
         }
         // Graphics
         this.img = new Image()
-        this.img.src = '../assets/img/waterReflect2.png'
+        this.img.src = './assets/img/waterReflect2.png'
         this.img.frames = 4
         this.img.frameIndex = 0
         this.tick = 0
