@@ -1,0 +1,76 @@
+@font-face {
+    src: url(../assets/fonts/KenneyMiniSquare.ttf);
+    font-family: pixelFont;
+    font-style: normal;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: pixelFont;
+    color: #ffffff;
+    background-color: #302E3B;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    margin: 20px;
+    padding: 0;
+    border: 0px solid #5a5670;
+    background-color: #f8f9f9 ;
+}
+
+.title {
+    position: fixed;
+    width: 1280px;
+    height: 960px;
+    background-color: #302E3B;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.start-btn {
+    font-family: pixelFont;
+    font-size: 24px;
+    width: 200px;
+    margin: 10px;
+    padding: 20px 10px;
+    color: #fff;
+    background-color: #4f4a67;
+    border: none;
+}
+
+.restart-btn {
+    display: none;
+    top: 650px;
+    position: absolute;
+    font-family: pixelFont;
+    font-size: 24px;
+    width: 200px;
+    margin: 10px;
+    padding: 20px 10px;
+    color: #fff;
+    background-color: #ba2a2a;
+    border: none;
+}
+
+.start-btn:hover {
+    background-color: #756e98;
+}
+
+.restart-btn:hover {
+    background-color: #d45656;
+}
+
